@@ -34,3 +34,13 @@ def test_multiple_even():
 
     # Check that we work in same way as python does
     assert res == test_arr[len(test_arr) // 2 - 1: len(test_arr) // 2 + 1]
+
+
+# Test with different types
+def test_float():
+    test_arr = [5, 6.5, 12, 90.35, 23, 56.55, 22, 140, 4]
+    res = find_median(test_arr)
+    test_arr.sort()
+
+    # Check that we work in same way as python does
+    assert res == test_arr[len(test_arr) // 2]
