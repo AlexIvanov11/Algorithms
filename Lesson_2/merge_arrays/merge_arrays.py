@@ -1,5 +1,8 @@
 from typing import List, Callable
 
+# This is an object to access validation lambdas (another python toy)
+# I could do this to arr2_index_mod and arr2_index_check but decided not to move them outside of the method
+# And to do that in a cleaner way (you'll see later)
 ordering = {
     "asc": (lambda x, y: x <= y),
     "desc": (lambda x, y: x >= y),
@@ -40,6 +43,7 @@ def merge_in_order(arr1: List[int],
             res.append(arr2[arr2_index])
             arr2_index = arr2_index_mod(arr2_index)
 
+    # And we append remaining elements like we do in merge sort
     while arr1_index < len(arr1):
         res.append(arr1[arr1_index])
         arr1_index += 1
@@ -56,7 +60,7 @@ def merge_arrays(arr1: List[int], arr2: List[int]) -> List[int]:
     if not isinstance(arr1, list) or not isinstance(arr2, list):
         raise TypeError("Invalid arguments specified, should be two arrays")
     # We could also check that both arrays are sorted in some order,
-    # but I do not think that we ned this at the moment
+    # but I do not think that we need this at the moment
 
     # Base case, we do not work with empty arrays
     # Array with len == 1 is sorted, of course )
@@ -65,8 +69,10 @@ def merge_arrays(arr1: List[int], arr2: List[int]) -> List[int]:
     if len(arr2) == 0:
         raise ValueError("Second array is empty!")
 
+    # Define order of both arrays
     arr1_order = define_order(arr1)
     arr2_order = define_order(arr2)
+
     # We assume that the order of first array is more important
     res = merge_in_order(arr1, arr2, ordering[arr1_order], arr1_order == arr2_order)
     return res
