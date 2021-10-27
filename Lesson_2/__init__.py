@@ -1,0 +1,1 @@
+from Lesson_2.merge_arrays import merge_arrays
