@@ -1,5 +1,5 @@
 import pytest
-from Lesson_1.find_place.source.find_place import find_place
+from Lesson_1 import find_place
 
 
 def test_empty():

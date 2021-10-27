@@ -1,0 +1,1 @@
+from .inverse_number import simple_inverse, math_inverse

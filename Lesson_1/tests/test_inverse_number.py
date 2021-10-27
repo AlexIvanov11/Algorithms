@@ -1,5 +1,5 @@
 import pytest
-from Lesson_1.inverse_number.source.inverse_number import simple_inverse, math_inverse
+from Lesson_1 import simple_inverse, math_inverse
 
 
 def test_simple_wrong_type():

@@ -1,5 +1,5 @@
 import pytest
-from Lesson_1.array_shift.source.array_shift import array_shift
+from Lesson_1 import array_shift
 
 
 def test_wrong_value():

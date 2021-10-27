@@ -1,5 +1,5 @@
 import pytest
-from Lesson_1.find_average.source.find_average import find_average
+from Lesson_1 import find_average
 
 
 def test_empty():

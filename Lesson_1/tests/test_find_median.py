@@ -1,5 +1,5 @@
 import pytest
-from Lesson_1.find_median.source.find_median import find_median
+from Lesson_1 import find_median
 
 
 # Test exception for an empty array
