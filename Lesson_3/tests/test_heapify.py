@@ -17,5 +17,5 @@ def test_heap_heapify(arr, expected):
                          ([58, 32, 33, 67, 12, 43, 98, 2, 3, 12, 45],
                           [2, 3, 33, 12, 12, 43, 98, 67, 32, 58, 45])])
 def test_heapify(arr, expected):
-    res = heapify(arr)
-    assert res == expected
+    heapify(arr)
+    assert arr == expected

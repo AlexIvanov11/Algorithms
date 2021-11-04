@@ -47,24 +47,16 @@ class Heap:
         arr[pos1], arr[pos2] = arr[pos2], arr[pos1]
 
     @classmethod
-    def insert(cls, arr, item):
-        arr.append(item)
-        # Pointer at the last element that ws pushed into heap
-        current = len(arr) - 1
-        # save it into variable for better readability
-        parent_index = (current - 1) // 2
-        while arr[current] < arr[parent_index] and parent_index >= 0:
-            arr[current], arr[parent_index] = arr[parent_index], arr[current]
-            current = parent_index
-            parent_index = (current - 1) // 2
-
-    @classmethod
     def heapify(cls, arr: List[int]):
-        # basically this is almost the same as init of Heap
-        res = [arr[0]]
-        for item in arr[1:]:
-            cls.insert(res, item)
-        return res
+        for i in range(len(arr)):
+            current = i
+            # save it into variable for better readability
+            parent_index = cls._parent(current)
+            # if current item is smaller than parent, change places
+            while arr[current] < arr[parent_index] and parent_index >= 0:
+                arr[current], arr[parent_index] = arr[parent_index], arr[current]
+                current = parent_index
+                parent_index = cls._parent(current)
 
 
 def heapify(arr: List[int]) -> List[int]:
@@ -76,4 +68,5 @@ if __name__ == "__main__":
     test_arr = [58, 32, 33, 67, 12, 43, 98, 2, 3, 12, 45]
     heap = Heap(test_arr)
     print(heap.items)
-    print(heapify(test_arr))
+    heapify(test_arr)
+    print(test_arr)
