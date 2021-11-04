@@ -32,6 +32,15 @@ def find_unique_arrays(arr: List[int]) -> int:
             res -= arr[i]
     return res
 
+def find_unique_the_smartest_way(arr: List[int]) -> int:
+    # We just use XOR for all the elements in array
+    # In Python (not sure about other languages) we don't need to convert the value into boolean,
+    # all functions like AND, XOR, OR etc work the same way
+    res = 0
+    for num in arr:
+        res = res ^ num
+    return res
+
 
 if __name__ == "__main__":
     """
@@ -41,8 +50,10 @@ if __name__ == "__main__":
     10000 elements: 0.009998s vs 1.598525s
     100000 elements: 0.03499s vs 172.1367s !!!
     1000000 elements (I regret even trying to check this): 0.373s vs more than hour, didn't wait for so long
+    And the winner is the smart way!! Who could've thought that...
+    The result is 0.011s for 100000 elements
     """
-    test_list = [i for i in range(1000000)] * 2
+    test_list = [i for i in range(100000)] * 2
     test_list.append(22222)
 
     start_time = time.time()
@@ -54,3 +65,7 @@ if __name__ == "__main__":
     res_dict = find_unique_arrays(test_list)
     time_arr = time.time()
     print(f'Arrays: {time_arr - time_dict}')
+
+    res_dict = find_unique_the_smartest_way(test_list)
+    time_smart = time.time()
+    print(f'Arrays: {time_smart - time_arr}')
