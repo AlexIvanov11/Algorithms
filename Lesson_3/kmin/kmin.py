@@ -3,7 +3,7 @@ from typing import List
 
 # Copied from heapify lesson. It is already useful) But here I will use max heap
 class Heap:
-    def __init__(self, max_size: int = 0, items: List[int] = None):
+    def __init__(self, max_size: int = 0, items: List[int] = None) -> None:
         self.size = 0
         self.max_size = max_size
         self.items = []
@@ -13,21 +13,21 @@ class Heap:
 
     # get position of parent node
     @staticmethod
-    def _parent(index):
+    def _parent(index: int) -> int:
         return (index - 1) // 2
 
     # swap two elements
-    def _swap(self, pos1, pos2):
+    def _swap(self, pos1: int, pos2: int) -> None:
         self.items[pos1], self.items[pos2] = self.items[pos2], self.items[pos1]
 
     # Function to print the contents of the heap
-    def print_heap(self):
+    def print_heap(self) -> None:
         for i in range(1, (self.size // 2)):
             print(" PARENT : " + str(self.items[i]) + " LEFT CHILD : " +
                   str(self.items[2 * i]) + " RIGHT CHILD : " +
                   str(self.items[2 * i + 1]))
 
-    def _insert(self, item):
+    def _insert(self, item: int) -> None:
         self.items.append(item)
         self.size += 1
 
@@ -43,7 +43,7 @@ class Heap:
             current = parent_index
             parent_index = self._parent(current)
 
-    def rebuild(self):
+    def rebuild(self) -> None:
         for i in range(self.size):
             current = i
             # save it into variable for better readability
@@ -54,22 +54,22 @@ class Heap:
                 current = parent_index
                 parent_index = self._parent(current)
 
-    def insert_no_extension(self, item):
+    def insert_no_extension(self, item: int) -> None:
         # Remove the first element as the largest one
         self.items.pop(0)
         self.items.append(item)
         self.rebuild()
 
     @staticmethod
-    def swap(arr, pos1, pos2):
+    def swap(arr: List[int], pos1: int, pos2: int) -> None:
         arr[pos1], arr[pos2] = arr[pos2], arr[pos1]
 
     @property
-    def root(self):
+    def root(self) -> int:
         return self.items[0]
 
 
-def kmin(arr, k):
+def kmin(arr: List[int], k: int) -> List[int]:
     # Check that we can even find this
     if k > len(arr):
         raise ValueError("K is greater than length of specified array")
