@@ -1,34 +1,25 @@
-from typing import List
-
-
-def check_min_heap(arr, index):
-    # we can check the index inside of the method because it is easier nad has less code
-    # than checking it before caling the method
-    if index >= len(arr):
-        return True
-
-    return arr[index // 2] <= arr[index] \
-           and check_min_heap(arr, (index * 2) + 1) \
-           and check_min_heap(arr, (index * 2) + 2)
-
-
-def check_max_heap(arr, index):
-    if index >= len(arr):
-        return True
-
-    return arr[(index - 1) // 2] >= arr[index] \
-           and check_max_heap(arr, (index * 2) + 1) \
-           and check_max_heap(arr, (index * 2) + 2)
+from typing import List, Callable
 
 
 CHECKS = {
-    "min": check_min_heap,
-    "max": check_max_heap
+    "min": lambda x, y: x <= y,
+    "max": lambda x, y: x >= y
 }
 
 
+def is_heap(arr: List[int], index: int, method: Callable) -> bool:
+    # we can check the index inside of the method because it is easier nad has less code
+    # than checking it before calling the method
+    if index >= len(arr):
+        return True
+
+    return method(arr[(index - 1) // 2], arr[index]) \
+           and is_heap(arr, (index * 2) + 1, method) \
+           and is_heap(arr, (index * 2) + 2, method)
+
+
 # In the end this is really like the example given :)
-def check_heap(arr: List[int], method) -> bool:
+def check_heap(arr: List[int], method: str) -> bool:
     if len(arr) == 0:
         raise ValueError("Empty array specified")
 
@@ -37,7 +28,9 @@ def check_heap(arr: List[int], method) -> bool:
         return True
 
     # We can safely start now from the second (index 1) element
-    res = CHECKS[method](arr, 1)
+    # I decided to add logic to check min and max heaps
+    # So here we get necessary lambda from dictionary
+    res = is_heap(arr, 1, CHECKS[method])
     return res
 
 
