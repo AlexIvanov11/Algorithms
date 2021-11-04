@@ -9,13 +9,10 @@ T = TypeVar("T")
 class Node(Generic[T]):
 
     # Constructor to create a new node
-    def __init__(self, data: Union[int, str], parent: Optional['Node[T]'] = None) -> None:
+    def __init__(self, data: Union[int, str]) -> None:
         self.data = data
         self.left = None
         self.right = None
-        # I decided to store pointer to parent node, not really optimal in terms of memory,
-        # but easier to write algorithm, I suppose
-        self.parent = parent
 
 
 # A binary tree itself
@@ -38,12 +35,12 @@ class Tree(Generic[T]):
             if node.right is not None:
                 self.insert_node(node.right, data)
             else:
-                node.right = Node(data, node)
+                node.right = Node(data)
         else:
             if node.left is not None:
                 self.insert_node(node.left, data)
             else:
-                node.left = Node(data, node)
+                node.left = Node(data)
 
     def print_depth(self) -> None:
         self._print_node_recursive(self.root)

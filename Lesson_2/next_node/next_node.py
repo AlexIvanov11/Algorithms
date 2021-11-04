@@ -3,27 +3,33 @@ from typing import Union
 from .tree import Tree, Node
 
 
-def next_node(node: Node) -> Union[Node, None]:
-    # Parse through all elements to the right
-    # If we have something to the right, we are sure that all elements will be either lower thant parent or greater.
-    # Both cases mean that we do not have to even check parent
-    # If the node is lower than parent, then all nodes opn the right side will be also lower
-    # If the node is greater, then the desired value is still greater than parent and we also do not need to check it
+def next_node(root: Node, node: Node) -> Union[Node, None]:
+    # Check if we have something to the right side of the node
     if node.right is not None:
+        # This method iterates over the right subtree to find the least value
         return min_value(node.right)
 
-    # Then we walk through the parents if we have nowhere to go to the right
-    # Basically we need to find the leftmost element of the closes right branch
-    parent = node.parent
-    while parent is not None:
-        # if we got to this point and node value is lower than parents, then the parent is the target node
-        if node != parent.right:
+    # Create empty node to store result
+    nxt = Node(None)
+
+    # Then we check root and all subtrees from that
+    # 1. Check if our node is greater than root. If so, then we need to move to the right.
+    #   If root is greater than out node, mode to the left and remember visited node.
+    #   This node is now the last parent
+    # 2. If we moved to the right, we keep searching until we find the root that is greater than our node
+    #   after that we perform identical actions as in step 3
+    # 3. If we moved to the left, wwe remember the last node and repeat the same actions. We compare new root
+    #   to our node and move to the right or left side. When we find the node itself or reach the end of the tree,
+    #   the last remembered node is the target. This will be either the parent of node or the lowest possible value
+    while root:
+        if root.data < node.data:
+            root = root.right
+        elif root.data > node.data:
+            nxt = root
+            root = root.left
+        else:
             break
-        # If we start from the left side of parent, then we need to go higher until we reach the lowest possible value
-        # that is still greater than given node
-        node = parent
-        parent = parent.parent
-    return parent
+    return nxt
 
 
 def min_value(node: Node) -> Node:
@@ -42,6 +48,6 @@ if __name__ == "__main__":
     test_arr = [20, 7, 4, 6, 9, 35, 31, 28, 40, 38, 52]
     tree = Tree(test_arr)
     tree.pretty_print()
-    test_node = tree.find_node(20)
-    print(f"Next node to {test_node.data} is {next_node(test_node).data}")
+    test_node = tree.find_node(9)
+    print(f"Next node to {test_node.data} is {next_node(tree.root, test_node).data}")
 
